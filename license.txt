@@ -3,7 +3,7 @@ AnimSprite developed with support from:
    Eyebeam Art + Technology Center
    Ontario Arts Council / Chalmers Family Fund
 
-Copyright (c) 2013 Nick Fox-Gieg
+Copyright (c) 2015 Nick Fox-Gieg
 http://fox-gieg.com
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
