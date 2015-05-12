@@ -11,9 +11,11 @@ function AnimSprite(_name, _fps, _tdx, _tdy, _etx, _ety) { // _name is single PI
   this.playing = true;
   this.playOnce = false;
   this.debug = false;
+
+  this.mouseable = true;
   this.hovered = false;
   this.clicked = false;
-  
+
   //position, rotation, scale, target
   this.r = 0;
   this.p = createVector(0, 0);
@@ -30,6 +32,8 @@ function AnimSprite(_name, _fps, _tdx, _tdy, _etx, _ety) { // _name is single PI
 
   this.gravity = 1.0;
   this.floor = 400;
+  this.boundaryX = [0,1];
+  this.boundaryY = [0,1];
 
   console.log(this.spriteName + " :: " + 
               "frames: " + this.framesArray.length +
@@ -86,6 +90,11 @@ AnimSprite.prototype.setSpeed = function() {
 }
 
 AnimSprite.prototype.update = function() {
+  if (this.mouseable){
+    this.checkHover();
+    this.checkClick();  
+  }
+
   this.setSpeed();
   if(this.playing){
     this.currentFrame += this.speed;
@@ -120,6 +129,14 @@ AnimSprite.prototype.run = function() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //basic behaviors
 
+AnimSprite.prototype.checkHover = function() {
+  this.hovered = this.hitDetect(mouseX,mouseY);
+}
+
+AnimSprite.prototype.checkClick = function() {
+  if (this.hovered) this.clicked = mouseIsPressed;
+}
+
 //Tween movement.  start, end, ease (more = slower).
 AnimSprite.prototype.tween = function(_e) { //float
   var _ease;
@@ -132,7 +149,7 @@ AnimSprite.prototype.tween = function(_e) { //float
   this.p.y += (this.t.y-this.p.y)/_ease;
 }
 
-AnimSprite.prototype.shake = function(_s) {
+AnimSprite.prototype.shaker = function(_s) {
   var _shake;
   if (!_s) {
     _shake = this.shake;
@@ -143,13 +160,41 @@ AnimSprite.prototype.shake = function(_s) {
   this.p.y += random(_shake) - random(_shake);
 }
 
-AnimSprite.prototype.boundary = function(v1, vMin, vMax) {
-  if (v1<vMin) {
-    v1 = vMin;
-  } else if (v1>vMax) {
-    v1=vMax;
+AnimSprite.prototype.boundary = function(_xMin, _xMax, _yMin, _yMax) {
+  var xMin;
+  if (!_xMin) {
+    xMin = this.boundaryX[0];
+  } else {
+    xMin = _xMin;
+  }  
+  var xMax;
+  if (!_xMax) {
+    xMax = this.boundaryX[1];
+  } else {
+    xMax = _xMax;
+  }  
+  var yMin;
+  if (!_yMin) {
+    yMin = this.boundaryY[0];
+  } else {
+    yMin = _yMin;
+  }  
+  var yMax;
+  if (!_yMax) {
+    yMax = this.boundaryY[1];
+  } else {
+    yMax = _yMax;
   } 
-  return v1;
+  if (this.p.x < xMin) {
+    this.p.x = xMin;
+  } else if (this.p.x > xMax) {
+    this.p.x = xMax
+  }     
+  if (this.p.y < yMin) {
+    this.p.y = yMin;
+  } else if (this.p.y > yMax) {
+    this.p.y = yMax
+  }    
 }
 
 AnimSprite.prototype.falling = function(_g) {  //y pos, floor num, gravity num
