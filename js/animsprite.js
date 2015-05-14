@@ -32,8 +32,6 @@ function AnimSprite(_name, _fps, _tdx, _tdy, _etx, _ety) { // _name is single PI
 
   this.gravity = 1.0;
   this.floor = 400;
-  this.boundaryX = [0,1];
-  this.boundaryY = [0,1];
 
   console.log(this.spriteName + " :: " + 
               "frames: " + this.framesArray.length +
@@ -160,41 +158,17 @@ AnimSprite.prototype.shaker = function(_s) {
   this.p.y += random(_shake) - random(_shake);
 }
 
-AnimSprite.prototype.boundary = function(_xMin, _xMax, _yMin, _yMax) {
-  var xMin;
-  if (!_xMin) {
-    xMin = this.boundaryX[0];
-  } else {
-    xMin = _xMin;
-  }  
-  var xMax;
-  if (!_xMax) {
-    xMax = this.boundaryX[1];
-  } else {
-    xMax = _xMax;
-  }  
-  var yMin;
-  if (!_yMin) {
-    yMin = this.boundaryY[0];
-  } else {
-    yMin = _yMin;
-  }  
-  var yMax;
-  if (!_yMax) {
-    yMax = this.boundaryY[1];
-  } else {
-    yMax = _yMax;
-  } 
-  if (this.p.x < xMin) {
-    this.p.x = xMin;
-  } else if (this.p.x > xMax) {
-    this.p.x = xMax
-  }     
-  if (this.p.y < yMin) {
-    this.p.y = yMin;
-  } else if (this.p.y > yMax) {
-    this.p.y = yMax
-  }    
+AnimSprite.prototype.bounds = function() {
+  if (this.p.x < 0) {
+    this.p.x = 0;
+  } else if (this.p.x > width) {
+    this.p.x = width;
+  }
+  if (this.p.y < 0) {
+    this.p.y = 0;
+  } else if (this.p.y > height) {
+    this.p.y = height;
+  }
 }
 
 AnimSprite.prototype.falling = function(_g) {  //y pos, floor num, gravity num

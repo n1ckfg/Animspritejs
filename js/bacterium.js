@@ -1,40 +1,48 @@
-class Bacterium extends AnimSprite{
- 
-  Bacterium() {
-    super("bacterium",12,50,50,10,10);
-    init();
+Bacterium.prototype = Object.create(AnimSprite.prototype);
+Bacterium.prototype.constructor = Bacterium;
+
+function Bacterium(_name, _fps, _tdx, _tdy, _etx, _ety) {
+  AnimSprite.call(this, _name, _fps, _tdx, _tdy, _etx, _ety);
+  this.shakeMin = 5;
+  this.shake = this.shakeMin;
+  this.shakeMax = 50;
+  this.ease = 5;  
+  this.behavior = "stop";
+  this.gotoFrame(this.behavior);
+  this.p = createVector(width/2,height/2);
+}
+
+Bacterium.prototype.gotoFrame = function(_c) {
+  this.behavior = _c;
+  if (this.behavior == "play") {
+    this.loopIn = 10;
+    this.loopOut = 99;
+  }
+  if (this.behavior == "stop") {
+    this.loopIn = 0;
+    this.loopOut = 9;
+  }
+}
+
+Bacterium.prototype.behaviors = function() {
+  if (this.behavior == "play") {
+    if (this.shake < this.shakeMax) {
+      this.shake++;
+    }
+    this.t = createVector(mouseX,mouseY);
+    this.tween();
   }
 
-  Bacterium(PImage[] _name) { 
-    super(_name,12);
-    init();
-  }
-   
-  function init() {
-    super.init();
-    p = new PVector(sW/2,sH/2,0);
-  }
-   
-  function update() {
-    if (mousePressed) {
-      p = tween3D(p, new PVector(mouseX,mouseY,0), new PVector(random(10,100),random(10,100),10));
-      t = new PVector(random(sW),random(sH),random(sD)-(sD/2));
-    } else {
-      p = tween3D(p, t, new PVector(random(10,100),random(10,100),10));
-    }
-    if (hitDetect(p.x,p.y,s.x,s.x,t.x,t.y,s.x,s.y)) {
-      t = new PVector(random(sW),random(sH),random(sD)-(sD/2));
-    }
-    super.update();
-  }
-   
-  function draw() {
-    super.draw();
-  }
-   
-  function run() {
-    update();
-    draw();
+  if (this.behavior == "stop") {
+    this.shake = this.shakeMin;
   }
 
+  //this.shaker();
+  this.bounds();
+}
+
+Bacterium.prototype.run = function() {
+  this.update();
+  this.behaviors();
+  this.draw();
 }
