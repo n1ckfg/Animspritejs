@@ -31,6 +31,24 @@ function setup() {
 
 function draw() {
   image(bg_img, 0, 0);
+
+  if (keyIsPressed) {
+    if (keyCode == LEFT_ARROW) {
+      this.left = true;
+    }
+    if (keyCode == RIGHT_ARROW) {
+      this.right = true;
+    }
+  }
+
+  if (left && !right) {
+    human.gotoFrame("runLeft");
+  } else if (!left && right) {
+    human.gotoFrame("runRight");
+  } else if (!left && !right){
+    human.gotoFrame("stop");
+  }
+
   human.run();
   for (var i=0; i< bacteria.length; i++) {
     if (mouseIsPressed) {
@@ -55,29 +73,31 @@ function mouseReleased() {
   }
 }
 
-function keyPressed(){
-    if (keyCode == LEFT_ARROW) {
-      human.gotoFrame("runLeft");
-    }
-    if (keyCode == RIGHT_ARROW) {
-      human.gotoFrame("runRight");
-    }
-    if (key === ' ' && human.jumpReady == true) {
+function keyPressed() {
+  if (keyCode == LEFT_ARROW) {
+    this.left = true;
+  }
+  if (keyCode == RIGHT_ARROW) {
+    this.right = true;
+  }    
+
+  if (key === ' ' && human.jumpReady == true) {
     human.jumpReady = false;
     human.jump = true;
-  }
+  }  
 }
 
 function keyReleased() {
   if (keyCode == LEFT_ARROW) {
-    human.gotoFrame("stop");
-  } else if (keyCode == RIGHT_ARROW) {
-    human.gotoFrame("stop");
+    this.left = false;
   }
-  
+  if (keyCode == RIGHT_ARROW) {
+    this.right = false;
+  }    
+
   if (key === ' ') {
     human.jumpReady = true;
     human.jump = false;
-  }
+  }  
 }
 

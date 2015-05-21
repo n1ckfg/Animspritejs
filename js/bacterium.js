@@ -10,6 +10,8 @@ function Bacterium(_name, _fps, _tdx, _tdy, _etx, _ety) {
   this.behavior = "stop";
   this.gotoFrame(this.behavior);
   this.p = createVector(width/2,height/2);
+  this.gravity = 1.0;
+  this.floor = floorNum;
 }
 
 Bacterium.prototype.gotoFrame = function(_c) {
@@ -38,6 +40,7 @@ Bacterium.prototype.behaviors = function() {
   }
 
   this.shaker();
+  //this.gravity();
   this.bounds();
 };
 

@@ -9,6 +9,8 @@ function Human(_name, _fps, _tdx, _tdy, _etx, _ety) {
   this.jump = false;
   this.jumpReady = true;
   this.gotoFrame("stop");
+  this.gravity = gravityNum;
+  this.floor = floorNum;
 }
 
 Human.prototype.gotoFrame = function(_c) {
@@ -43,19 +45,19 @@ Human.prototype.behaviors = function() {
   }
   
   if (this.jump) {
-    this.jumpReady = false;
-    if (this.p.y > this.floorNum - this.jumpHeight) {
+    this.jumpReady=false;
+    if ( this.p.y > floorNum - this.jumpHeight) {
       this.p.y -= this.jumpSpeed;
     }
-    if (this.p.y <= this.floorNum - this.jumpHeight) {
+    if ( this.p.y <= floorNum - this.jumpHeight) {
       this.jump = false;
     }
   } else {
-    if (this.y == this.floorNum - this.jumpHeight){
+    if (this.p.y == floorNum - this.jumpHeight) {
       this.jumpReady = true;
     }
   }
-  
+  this.falling();
   this.bounds();
 };
 
