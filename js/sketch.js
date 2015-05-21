@@ -1,14 +1,12 @@
 var human_img, bacterium_img, bg_img;
 var human, bacterium;
 var bacteria = [];
-var numBacteria = 10;
+var numBacteria = 20;
 var gravityNum = 8;
 var floorNum = 350;
 
 var left = false;
 var right = false;
-var up = false;
-var down = false;
 
 function preload() {
   human_img = loadImage("images/walksequence.png");
