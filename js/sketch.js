@@ -32,15 +32,17 @@ function setup() {
 function draw() {
   image(bg_img, 0, 0);
   human.run();
-  for(var i=0; i< bacteria.length; i++) {
-    if (mouseIsPressed) bacteria[i].tween;
+  for (var i=0; i< bacteria.length; i++) {
+    if (mouseIsPressed) {
+      bacteria[i].tween;
+    }
     bacteria[i].run();
   }
 }
 
 function mousePressed() {
   console.log("mouse pressed");
-  for(var i=0; i< bacteria.length; i++) {
+  for (var i=0; i< bacteria.length; i++) {
     bacteria[i].t = createVector(mouseX,mouseY);
     bacteria[i].gotoFrame("play");
   }
@@ -48,19 +50,19 @@ function mousePressed() {
 
 function mouseReleased() {
   console.log("mouse released");
-  for(var i=0; i< bacteria.length; i++) {
+  for (var i=0; i< bacteria.length; i++) {
     bacteria[i].gotoFrame("stop");
   }
 }
 
 function keyPressed(){
-  if (keyCode == LEFT_ARROW) {
-    human.gotoFrame("runLeft");
-  } else if (keyCode == RIGHT_ARROW) {
-    human.gotoFrame("runRight");
-  }
-
-  if (key === ' ' && human.jumpReady == true) {
+    if (keyCode == LEFT_ARROW) {
+      human.gotoFrame("runLeft");
+    }
+    if (keyCode == RIGHT_ARROW) {
+      human.gotoFrame("runRight");
+    }
+    if (key === ' ' && human.jumpReady == true) {
     human.jumpReady = false;
     human.jump = true;
   }
@@ -73,7 +75,7 @@ function keyReleased() {
     human.gotoFrame("stop");
   }
   
-  if(key === ' ') {
+  if (key === ' ') {
     human.jumpReady = true;
     human.jump = false;
   }

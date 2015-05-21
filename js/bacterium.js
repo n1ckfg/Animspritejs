@@ -5,8 +5,8 @@ function Bacterium(_name, _fps, _tdx, _tdy, _etx, _ety) {
   AnimSprite.call(this, _name, _fps, _tdx, _tdy, _etx, _ety);
   this.shakeMin = 5;
   this.shake = this.shakeMin;
-  this.shakeMax = 50;
-  this.ease = 5;  
+  this.shakeMax = 20;
+  this.ease = Math.random() * 100;  
   this.behavior = "stop";
   this.gotoFrame(this.behavior);
   this.p = createVector(width/2,height/2);
@@ -22,7 +22,7 @@ Bacterium.prototype.gotoFrame = function(_c) {
     this.loopIn = 0;
     this.loopOut = 9;
   }
-}
+};
 
 Bacterium.prototype.behaviors = function() {
   if (this.behavior == "play") {
@@ -37,12 +37,12 @@ Bacterium.prototype.behaviors = function() {
     this.shake = this.shakeMin;
   }
 
-  //this.shaker();
+  this.shaker();
   this.bounds();
-}
+};
 
 Bacterium.prototype.run = function() {
-  this.update();
   this.behaviors();
+  this.update();
   this.draw();
-}
+};

@@ -2,12 +2,12 @@
 function AnimSprite(_name, _fps, _tdx, _tdy, _etx, _ety) { // _name is single PImage
   this.spriteName = "sprite";
   this.spriteTag = "tag";
-  this.framesArray = []; //PImage array
+  this.framesArray = []; // PImage array
   this.loopIn = 0;
   this.currentFrame = parseFloat(this.loopIn);
-  this.loopOut = 1;//this.framesArray.length; 
+  this.loopOut = 1; // this.framesArray.length; 
   this.fps = _fps;
-  this.speed = 12.0/60.0;
+  this.rate = 0.2; // 12/60
   this.playing = true;
   this.playOnce = false;
   this.debug = false;
@@ -49,7 +49,7 @@ AnimSprite.prototype.init = function(_tdx, _tdy) {
   
   this.w = _tdx;//this.framesArray[0].width;
   this.h = _tdy;//this.framesArray[0].height;  
-}
+};
 
 AnimSprite.prototype.loadSpriteSheet = function(_name, _tdx, _tdy, _etx, _ety){
   try {
@@ -79,13 +79,13 @@ AnimSprite.prototype.loadSpriteSheet = function(_name, _tdx, _tdy, _etx, _ety){
   }catch(e) { 
     console.log("Image loading failed.");
   }
-}
+};
 
 //~~~~~~~~~~~~~~~~~~~~~~
 
-AnimSprite.prototype.setSpeed = function() {
-  this.speed = this.fps/frameRate();
-}
+AnimSprite.prototype.setRate = function() {
+  this.rate = this.fps/frameRate();
+};
 
 AnimSprite.prototype.update = function() {
   if (this.mouseable){
@@ -93,9 +93,9 @@ AnimSprite.prototype.update = function() {
     this.checkClick();  
   }
 
-  this.setSpeed();
+  this.setRate();
   if(this.playing){
-    this.currentFrame += this.speed;
+    this.currentFrame += this.rate;
     if (this.currentFrame >= this.loopOut) {
       if(this.playOnce){
         this.playing=false;
@@ -104,7 +104,7 @@ AnimSprite.prototype.update = function() {
       }
     }
   }
-}
+};
 
 AnimSprite.prototype.draw = function() {
   push();
@@ -117,23 +117,23 @@ AnimSprite.prototype.draw = function() {
   imageMode(CENTER);
   image(this.framesArray[parseInt(this.currentFrame)], 0, 0);
   pop();
-}
+};
 
 AnimSprite.prototype.run = function() {
   this.update();
   this.draw();
-}
+};
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //basic behaviors
 
 AnimSprite.prototype.checkHover = function() {
   this.hovered = this.hitDetect(mouseX,mouseY);
-}
+};
 
 AnimSprite.prototype.checkClick = function() {
   if (this.hovered) this.clicked = mouseIsPressed;
-}
+};
 
 //Tween movement.  start, end, ease (more = slower).
 AnimSprite.prototype.tween = function(_e) { //float
@@ -145,7 +145,7 @@ AnimSprite.prototype.tween = function(_e) { //float
   }
   this.p.x += (this.t.x-this.p.x)/_ease;
   this.p.y += (this.t.y-this.p.y)/_ease;
-}
+};
 
 AnimSprite.prototype.shaker = function(_s) {
   var _shake;
@@ -156,7 +156,7 @@ AnimSprite.prototype.shaker = function(_s) {
   }  
   this.p.x += random(_shake) - random(_shake);
   this.p.y += random(_shake) - random(_shake);
-}
+};
 
 AnimSprite.prototype.bounds = function() {
   if (this.p.x < 0) {
@@ -169,7 +169,7 @@ AnimSprite.prototype.bounds = function() {
   } else if (this.p.y > height) {
     this.p.y = height;
   }
-}
+};
 
 AnimSprite.prototype.falling = function(_g) {  //y pos, floor num, gravity num
   var gravity;
@@ -184,7 +184,7 @@ AnimSprite.prototype.falling = function(_g) {  //y pos, floor num, gravity num
   } else if (this.p.y >= this.floor) {
     this.p.y = this.floor;
   }
-}
+};
 
 //2D Hit Detect.  Assumes center.  x,y,w,h of object 1, x,y,w,h, of object 2.
 AnimSprite.prototype.hitDetect = function(_x, _y) {
@@ -211,5 +211,5 @@ AnimSprite.prototype.hitDetect = function(_x, _y) {
   } else {
     return false;
   }
-}
+};
 
