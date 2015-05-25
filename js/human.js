@@ -17,12 +17,12 @@ Human.prototype.gotoFrame = function(_c) {
   this.behavior = _c;
   if (this.behavior == "runLeft") {
     this.loopIn = 0;
-    this.loopOut = 9;
+    this.loopOut = 29;
     this.s.x = -1.0;
   }
   if (this.behavior == "runRight") {
     this.loopIn = 0;
-    this.loopOut = 9;
+    this.loopOut = 29;
     this.s.x = 1.0;
   }
   if (this.behavior == "stop") {

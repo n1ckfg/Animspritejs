@@ -3,15 +3,15 @@ Bacterium.prototype.constructor = Bacterium;
 
 function Bacterium(_name, _fps, _tdx, _tdy, _etx, _ety) {
   AnimSprite.call(this, _name, _fps, _tdx, _tdy, _etx, _ety);
-  this.shakeMin = 5;
+  this.shakeMin = 2;
   this.shake = this.shakeMin;
-  this.shakeMax = 20;
-  this.ease = Math.random() * 100;  
+  this.shakeMax = 60;
+  this.ease = 200;  
   this.behavior = "stop";
   this.gotoFrame(this.behavior);
   this.p = createVector(width/2,height/2);
-  this.gravity = 1.0;
-  this.floor = floorNum;
+  this.gravity = 0.25;
+  this.floor = floorNum + 80;
 }
 
 Bacterium.prototype.gotoFrame = function(_c) {
@@ -22,7 +22,7 @@ Bacterium.prototype.gotoFrame = function(_c) {
   }
   if (this.behavior == "stop") {
     this.loopIn = 0;
-    this.loopOut = 9;
+    this.loopOut = 10;
   }
 };
 
@@ -40,7 +40,7 @@ Bacterium.prototype.behaviors = function() {
   }
 
   this.shaker();
-  //this.gravity();
+  this.falling();
   this.bounds();
 };
 

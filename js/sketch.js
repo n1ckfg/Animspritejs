@@ -16,10 +16,10 @@ function preload() {
 
 function setup() {
   createCanvas(640,480);
-  human = new Human(human_img, 12, 150, 185, 3, 3); // image, fps, tileX, tileY, xpos, 
+  human = new Human(human_img, 12, 150, 185, 6, 5); // image, fps, tileHeightX, tileHeightY, numTilesX, numTilesY
   human.p = createVector(width/2,floorNum);  
 
-  bacterium = new Bacterium(bacterium_img, 1, 50, 50, 10, 10); // image, fps, tileX, tileY, xpos, 
+  bacterium = new Bacterium(bacterium_img, 1, 50, 50, 10, 10);
 
   for (var i=0; i<numBacteria; i++) {
     bacteria.ease = 1000;
