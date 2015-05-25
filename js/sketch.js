@@ -1,3 +1,5 @@
+var canvas;
+
 var human_img, bacterium_img, bg_img;
 var human, bacterium;
 var bacteria = [];
@@ -15,7 +17,8 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(640,480);
+  canvas = createCanvas(640,480);
+  canvas.parent("container");
   human = new Human(human_img, 12, 150, 185, 6, 5); // image, fps, tileHeightX, tileHeightY, numTilesX, numTilesY
   human.p = createVector(width/2,floorNum);  
 
